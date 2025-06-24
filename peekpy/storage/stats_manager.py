@@ -50,4 +50,4 @@ def reset_stats():
 def save_stats_to_file(file_path: str):
     """Save the current statistics to a file."""
     with open(file_path, "w", encoding="utf-8") as file:
-        json.dump(stats_manager.get_stats, file, indent=4)
+        json.dump(stats_manager.get_stats(), file, indent=4)
