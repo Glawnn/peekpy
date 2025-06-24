@@ -2,23 +2,14 @@
 This module provides a decorator for analyzing function performance and usage statistics.
 """
 
-import time
-
 from peekpy.config.settings import is_enabled
-from peekpy.storage import stats_manager
+from peekpy.core.analyzers import CallCounter
 
 
-def analyze(_func=None, *, count: bool = True, time_measure: bool = False):
-    """Decorator to analyze function performance and usage statistics.
-    Args:
-        _func (callable, optional): The function to be decorated. Defaults to None.
-        count (bool, optional): Whether to count the number of times the function is called.
-        Defaults to True.
-        time_measure (bool, optional): Whether to measure the execution time of the function.
-        Defaults to False.
-    Returns:
-        callable: The decorated function with performance and usage statistics.
-    """
+def analyze(_func=None, *, analyzers=None):
+    """ Decorator to analyze the performance and usage of a function."""
+    if analyzers is None:
+        analyzers = [CallCounter()]
 
     def decorator(func):
         """Decorator function to wrap the original function."""
@@ -28,16 +19,15 @@ def analyze(_func=None, *, count: bool = True, time_measure: bool = False):
             if not is_enabled():
                 return func(*args, **kwargs)
 
-            if count:
-                stats_manager.increment_stat(func.__name__)
-            if time_measure:
-                start = time.perf_counter()
-                result = func(*args, **kwargs)
-                elapsed = time.perf_counter() - start
-                stats_manager.add_time(func.__name__, elapsed)
-                return result
+            for analyzer in analyzers:
+                analyzer.before(func, *args, **kwargs)
 
-            return func(*args, **kwargs)
+            result = func(*args, **kwargs)
+
+            for analyzer in analyzers:
+                analyzer.after(func, result, *args, **kwargs)
+
+            return result
 
         wrapper.__name__ = func.__name__
         wrapper.__doc__ = func.__doc__
