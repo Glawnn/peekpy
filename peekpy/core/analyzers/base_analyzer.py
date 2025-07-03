@@ -1,5 +1,7 @@
-""" Base class for analyzers in PeekPy.
-This module defines the BaseAnalyzer class, which serves as a base for all analyzers in PeekPy."""
+"""Base class for analyzers in PeekPy.
+This module defines the BaseAnalyzer class, which serves as a base for all analyzers in PeekPy.
+"""
+
 
 class BaseAnalyzer:
     """
