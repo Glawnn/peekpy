@@ -2,6 +2,7 @@
 
 ![PyPI - Version](https://img.shields.io/pypi/v/peekpy)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/peekpy)
+![PyPI - License](https://img.shields.io/pypi/l/peekpy)
 
 
 **PeekPy** is a lightweight Python library for collecting runtime statistics and profiling function calls.

@@ -1,5 +1,4 @@
-"""Stats Manager for tracking function call statistics.
-"""
+"""Stats Manager for tracking function call statistics."""
 
 import json
 

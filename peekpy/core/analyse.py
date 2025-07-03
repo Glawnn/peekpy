@@ -7,7 +7,7 @@ from peekpy.core.analyzers import CallCounter
 
 
 def analyze(_func=None, *, analyzers=None):
-    """ Decorator to analyze the performance and usage of a function."""
+    """Decorator to analyze the performance and usage of a function."""
     if analyzers is None:
         analyzers = [CallCounter()]
 
